@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智诚博远游乐设备制造公司</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+        }
+        
+        body {
+            background: url('https://images.unsplash.com/photo-1513828583688-c52646db42da?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+        
+        .overlay {
+            background-color: rgba(10, 10, 20, 0.85);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #4CAF50;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #4CAF50;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 0;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: #ccc;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #45a049;
+        }
+        
+        .section {
+            padding: 60px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+        
+        .content-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .content-box h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .content-box p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .contact-info {
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+        
+        .contact-info strong {
+            color: #4CAF50;
+        }
+        
+        .capabilities-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        
+        .capability {
+            flex: 1 1 300px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .capabilities-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay">
+        <header>
+            <div class="logo">智诚博远游乐设备</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#products">产品中心</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#cases">成功案例</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <section class="hero" id="home">
+            <h1>创造沉浸式体验，引领娱乐科技新纪元</h1>
+            <p>智诚博远专注于设计、制造世界级体感模拟设备和飞行影院系统，为全球主题公园和娱乐中心提供创新解决方案。</p>
+            <a href="#contact" class="btn">联系我们</a>
+        </section>
+        
+        <section class="section" id="products">
+            <h2 class="section-title">核心能力</h2>
+            <div class="content-box">
+                <p>专注于创造令人难忘的沉浸式娱乐体验</p>
+            </div>
+            <div class="capabilities-container">
+                <div class="content-box capability">
+                    <h3>多媒体内容制作</h3>
+                    <p>专业团队打造高质量影片内容，结合先进技术，创造令人难忘的沉浸式娱乐体验。从脚本创作到3D建模，从特效制作到音效设计，全方位打造视听盛宴。</p>
+                </div>
+                <div class="content-box capability">
+                    <h3>体感设备制造</h3>
+                    <p>先进的体感模拟设备制造技术，为各类主题公园和娱乐中心提供定制化解决方案。采用航空级材料和精密机械，确保设备安全稳定运行。</p>
+                </div>
+                <div class="content-box capability">
+                    <h3>系统集成</h3>
+                    <p>一站式系统集成服务，确保设备稳定运行和最佳体验，从设计到维护全程支持。我们整合了最先进的投影、音响、控制和体感系统。</p>
+                </div>
+                <div class="content-box capability">
+                    <h3>全球部署</h3>
+                    <p>全球项目部署能力，为国际主题公园和娱乐中心提供专业的技术支持和服务。已在15+国家成功部署100+项目，具备丰富的国际经验。</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section" id="about">
+            <h2 class="section-title">关于我们</h2>
+            <div class="content-box">
+                <p>智诚博远是一家专注于设计、制造世界级体感模拟设备和飞行影院系统的创新企业。我们致力于为全球主题公园和娱乐中心提供卓越的沉浸式娱乐解决方案。</p>
+                <p>我们的团队由经验丰富的工程师、设计师和技术专家组成，拥有深厚的行业知识和创新能力，能够为客户提供从概念设计到最终实施的全方位服务。</p>
+            </div>
+        </section>
+        
+        <section class="section" id="cases">
+            <h2 class="section-title">成功案例</h2>
+            <div class="content-box">
+                <h3>全球项目经验</h3>
+                <p>我们已在全球15个以上国家成功部署100多个项目，包括：</p>
+                <ul style="margin-left: 20px; line-height: 1.6;">
+                    <li>亚洲多个知名主题公园的飞行影院系统</li>
+                    <li>欧洲顶级娱乐中心的体感模拟设备</li>
+                    <li>北美大型购物中心的沉浸式娱乐设施</li>
+                    <li>中东豪华度假村的定制化娱乐解决方案</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section class="section" id="contact">
+            <h2 class="section-title">联系我们</h2>
+            <div class="content-box">
+                <div class="contact-info">
+                    <p><strong>电话：</strong>15010601691</p>
+                    <p><strong>地址：</strong>北京市丰台区吴家村路57号华诚博远产业园</p>
+                    <p>欢迎随时联系我们，获取更多关于我们产品和服务的详细信息。</p>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 智诚博远游乐设备制造公司 版权所有</p>
+        </footer>
+    </div>
+</body>
+</html>
