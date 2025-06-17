@@ -22,6 +22,7 @@
             background-color: rgba(10, 10, 20, 0.85);
             min-height: 100vh;
             padding: 20px;
+            position: relative;
         }
         
         header {
@@ -62,10 +63,26 @@
             color: #fff;
             text-decoration: none;
             transition: color 0.3s;
+            position: relative;
         }
         
         nav ul li a:hover {
             color: #4CAF50;
+        }
+        
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #4CAF50;
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover::after {
+            width: 100%;
         }
         
         .hero {
@@ -117,11 +134,12 @@
             border-radius: 4px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
         
         .btn:hover {
             background-color: #45a049;
+            transform: translateY(-2px);
         }
         
         .section {
@@ -140,6 +158,12 @@
             padding: 30px;
             border-radius: 8px;
             margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .content-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         .content-box h3 {
@@ -181,6 +205,75 @@
             font-size: 14px;
         }
         
+        /* 语言切换按钮 */
+        .language-switcher {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+        
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #4CAF50;
+        }
+        
+        .lang-icon {
+            width: 20px;
+            height: 20px;
+        }
+        
+        /* 回到顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            width: 50px;
+            height: 50px;
+            background: rgba(76, 175, 80, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: rgba(69, 160, 73, 1);
+            transform: translateY(-5px);
+        }
+        
+        .back-to-top::after {
+            content: "↑";
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
         @media (max-width: 768px) {
             header {
                 flex-direction: column;
@@ -200,6 +293,7 @@
             
             nav ul li {
                 margin: 0 10px;
+                margin-bottom: 10px;
             }
             
             .hero h1 {
@@ -222,11 +316,33 @@
                 width: fit-content;
                 transform: rotate(0);
             }
+            
+            .language-switcher {
+                position: static;
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 40px;
+                height: 40px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="overlay">
+        <!-- 语言切换按钮 -->
+        <div class="language-switcher">
+            <button class="lang-btn" id="lang-toggle">
+                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0id2hpdGUiIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEyLjExIDIuOTdhMTAgMTAgMCAxIDAgMTAgMTAgMTAgMTAgMCAwIDAtMTAtMTB6bS0xIDh2NmgyVjYuMDhhOCA4IDAgMCAxIDYgNlYxMmgydjJoLTJ2LjI4YTggOCAwIDAgMS0yLjcgNS4yOEwxMyAxNXYtNGgtMlYxMmgydi0yaC0yeiIvPjwvc3ZnPg==" class="lang-icon">
+                <span id="lang-text">English</span>
+            </button>
+        </div>
+        
         <header>
             <div class="logo-container">
                 <img src="https://cdn.pixabay.com/photo/2016/08/25/07/30/red-1618916_1280.png" alt="智诚博远公司logo" class="logo">
@@ -311,6 +427,166 @@
         <footer>
             <p>© 2023 智诚博远（天津）游乐设备制造有限公司 版权所有</p>
         </footer>
+        
+        <!-- 回到顶部按钮 -->
+        <div class="back-to-top" id="backToTop"></div>
     </div>
+    
+    <script>
+        // 语言切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const langToggle = document.getElementById('lang-toggle');
+            const langText = document.getElementById('lang-text');
+            let currentLang = 'zh';
+            
+            // 切换语言
+            langToggle.addEventListener('click', function() {
+                if (currentLang === 'zh') {
+                    // 切换到英文
+                    translateToEn();
+                    langText.textContent = '中文';
+                    currentLang = 'en';
+                } else {
+                    // 切换到中文
+                    translateToZh();
+                    langText.textContent = 'English';
+                    currentLang = 'zh';
+                }
+            });
+            
+            // 翻译成英文
+            function translateToEn() {
+                document.querySelector('header nav ul li:nth-child(1) a').textContent = 'Home';
+                document.querySelector('header nav ul li:nth-child(2) a').textContent = 'Products';
+                document.querySelector('header nav ul li:nth-child(3) a').textContent = 'About';
+                document.querySelector('header nav ul li:nth-child(4) a').textContent = 'Cases';
+                document.querySelector('header nav ul li:nth-child(5) a').textContent = 'Contact';
+                
+                document.querySelector('.hero h1').textContent = 'Creating Immersive Experiences, Leading a New Era of Entertainment Technology';
+                document.querySelector('.hero p').textContent = 'Zhicheng Boyuan specializes in designing and manufacturing world-class motion simulation equipment and flight theater systems, providing innovative solutions for theme parks and entertainment centers worldwide.';
+                document.querySelector('.hero .btn').textContent = 'Contact Us';
+                
+                document.querySelector('#products .section-title').textContent = 'Core Capabilities';
+                document.querySelector('#products .content-box:first-child p').textContent = 'Specializing in creating unforgettable immersive entertainment experiences';
+                
+                document.querySelectorAll('#products .capability h3')[0].textContent = 'Multimedia Content Production';
+                document.querySelectorAll('#products .capability p')[0].textContent = 'Professional team creates high-quality film content, combining advanced technology to create unforgettable immersive entertainment experiences. From script creation to 3D modeling, from special effects to sound design, we create an audio-visual feast.';
+                
+                document.querySelectorAll('#products .capability h3')[1].textContent = 'Motion Simulation Equipment Manufacturing';
+                document.querySelectorAll('#products .capability p')[1].textContent = 'Advanced motion simulation equipment manufacturing technology provides customized solutions for theme parks and entertainment centers. Using aerospace-grade materials and precision machinery to ensure safe and stable operation.';
+                
+                document.querySelectorAll('#products .capability h3')[2].textContent = 'System Integration';
+                document.querySelectorAll('#products .capability p')[2].textContent = 'One-stop system integration services ensure stable equipment operation and optimal experience, with full support from design to maintenance. We integrate the most advanced projection, audio, control and motion systems.';
+                
+                document.querySelectorAll('#products .capability h3')[3].textContent = 'Global Deployment';
+                document.querySelectorAll('#products .capability p')[3].textContent = 'Global project deployment capabilities, providing professional technical support and services for international theme parks and entertainment centers. Successfully deployed 100+ projects in 15+ countries with rich international experience.';
+                
+                document.querySelector('#about .section-title').textContent = 'About Us';
+                document.querySelector('#about .content-box p:first-child').textContent = 'Zhicheng Boyuan is an innovative enterprise specializing in designing and manufacturing world-class motion simulation equipment and flight theater systems. We are committed to providing excellent immersive entertainment solutions for theme parks and entertainment centers worldwide.';
+                document.querySelector('#about .content-box p:last-child').textContent = 'Our team consists of experienced engineers, designers and technical experts with profound industry knowledge and innovation capabilities, providing comprehensive services from conceptual design to final implementation.';
+                
+                document.querySelector('#cases .section-title').textContent = 'Success Cases';
+                document.querySelector('#cases .content-box h3').textContent = 'Global Project Experience';
+                document.querySelector('#cases .content-box p').textContent = 'We have successfully deployed more than 100 projects in over 15 countries worldwide, including:';
+                
+                const casesList = document.querySelectorAll('#cases .content-box li');
+                casesList[0].textContent = 'Flight theater systems for several well-known theme parks in Asia';
+                casesList[1].textContent = 'Motion simulation equipment for top entertainment centers in Europe';
+                casesList[2].textContent = 'Immersive entertainment facilities for large shopping malls in North America';
+                casesList[3].textContent = 'Customized entertainment solutions for luxury resorts in the Middle East';
+                
+                document.querySelector('#contact .section-title').textContent = 'Contact Us';
+                document.querySelector('#contact .contact-info p:nth-child(1)').innerHTML = '<strong>Phone:</strong> 15010601691';
+                document.querySelector('#contact .contact-info p:nth-child(2)').innerHTML = '<strong>Address:</strong> Huacheng Boyuan Industrial Park, No.57 Wujiacun Road, Fengtai District, Beijing';
+                document.querySelector('#contact .contact-info p:nth-child(3)').textContent = 'Feel free to contact us for more information about our products and services.';
+                
+                document.querySelector('footer p').textContent = '© 2023 Zhicheng Boyuan (Tianjin) Amusement Equipment Manufacturing Co., Ltd. All Rights Reserved';
+            }
+            
+            // 翻译成中文
+            function translateToZh() {
+                document.querySelector('header nav ul li:nth-child(1) a').textContent = '首页';
+                document.querySelector('header nav ul li:nth-child(2) a').textContent = '产品中心';
+                document.querySelector('header nav ul li:nth-child(3) a').textContent = '关于我们';
+                document.querySelector('header nav ul li:nth-child(4) a').textContent = '成功案例';
+                document.querySelector('header nav ul li:nth-child(5) a').textContent = '联系我们';
+                
+                document.querySelector('.hero h1').textContent = '创造沉浸式体验，引领娱乐科技新纪元';
+                document.querySelector('.hero p').textContent = '智诚博远专注于设计、制造世界级体感模拟设备和飞行影院系统，为全球主题公园和娱乐中心提供创新解决方案。';
+                document.querySelector('.hero .btn').textContent = '联系我们';
+                
+                document.querySelector('#products .section-title').textContent = '核心能力';
+                document.querySelector('#products .content-box:first-child p').textContent = '专注于创造令人难忘的沉浸式娱乐体验';
+                
+                document.querySelectorAll('#products .capability h3')[0].textContent = '多媒体内容制作';
+                document.querySelectorAll('#products .capability p')[0].textContent = '专业团队打造高质量影片内容，结合先进技术，创造令人难忘的沉浸式娱乐体验。从脚本创作到3D建模，从特效制作到音效设计，全方位打造视听盛宴。';
+                
+                document.querySelectorAll('#products .capability h3')[1].textContent = '体感设备制造';
+                document.querySelectorAll('#products .capability p')[1].textContent = '先进的体感模拟设备制造技术，为各类主题公园和娱乐中心提供定制化解决方案。采用航空级材料和精密机械，确保设备安全稳定运行。';
+                
+                document.querySelectorAll('#products .capability h3')[2].textContent = '系统集成';
+                document.querySelectorAll('#products .capability p')[2].textContent = '一站式系统集成服务，确保设备稳定运行和最佳体验，从设计到维护全程支持。我们整合了最先进的投影、音响、控制和体感系统。';
+                
+                document.querySelectorAll('#products .capability h3')[3].textContent = '全球部署';
+                document.querySelectorAll('#products .capability p')[3].textContent = '全球项目部署能力，为国际主题公园和娱乐中心提供专业的技术支持和服务。已在15+国家成功部署100+项目，具备丰富的国际经验。';
+                
+                document.querySelector('#about .section-title').textContent = '关于我们';
+                document.querySelector('#about .content-box p:first-child').textContent = '智诚博远是一家专注于设计、制造世界级体感模拟设备和飞行影院系统的创新企业。我们致力于为全球主题公园和娱乐中心提供卓越的沉浸式娱乐解决方案。';
+                document.querySelector('#about .content-box p:last-child').textContent = '我们的团队由经验丰富的工程师、设计师和技术专家组成，拥有深厚的行业知识和创新能力，能够为客户提供从概念设计到最终实施的全方位服务。';
+                
+                document.querySelector('#cases .section-title').textContent = '成功案例';
+                document.querySelector('#cases .content-box h3').textContent = '全球项目经验';
+                document.querySelector('#cases .content-box p').textContent = '我们已在全球15个以上国家成功部署100多个项目，包括：';
+                
+                const casesList = document.querySelectorAll('#cases .content-box li');
+                casesList[0].textContent = '亚洲多个知名主题公园的飞行影院系统';
+                casesList[1].textContent = '欧洲顶级娱乐中心的体感模拟设备';
+                casesList[2].textContent = '北美大型购物中心的沉浸式娱乐设施';
+                casesList[3].textContent = '中东豪华度假村的定制化娱乐解决方案';
+                
+                document.querySelector('#contact .section-title').textContent = '联系我们';
+                document.querySelector('#contact .contact-info p:nth-child(1)').innerHTML = '<strong>电话：</strong>15010601691';
+                document.querySelector('#contact .contact-info p:nth-child(2)').innerHTML = '<strong>地址：</strong>北京市丰台区吴家村路57号华诚博远产业园';
+                document.querySelector('#contact .contact-info p:nth-child(3)').textContent = '欢迎随时联系我们，获取更多关于我们产品和服务的详细信息。';
+                
+                document.querySelector('footer p').textContent = '© 2023 智诚博远（天津）游乐设备制造有限公司 版权所有';
+            }
+            
+            // 回到顶部功能
+            const backToTopBtn = document.getElementById('backToTop');
+            
+            // 滚动事件监听
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            
+            // 点击回到顶部
+            backToTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // 平滑滚动导航
+            document.querySelectorAll('nav a').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
 </body>
 </html>
